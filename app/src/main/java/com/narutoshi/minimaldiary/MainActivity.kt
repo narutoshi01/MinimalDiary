@@ -4,10 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.google.android.material.textfield.TextInputEditText
 
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
-class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener, DatePickerFragment.OnDateSetListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +51,13 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
 
     // EditFragment.OnFragmentInteractionListener#onDateSelectBtnClicked
     override fun onDateSelectBtnClicked() {
-        // Todo DatePicker開く
+        // DatePicker開く
+        DatePickerFragment().show(supportFragmentManager, FragmentTag.DATE_PICKER.toString())
+    }
+
+    // DatePickerFragment.OnDateSetListener#onDateSelected
+    override fun onDateSelected(stringDate: String) {
+        val dateEdit = findViewById<TextInputEditText>(R.id.dateEdit)
+        dateEdit.setText(stringDate)
     }
 }

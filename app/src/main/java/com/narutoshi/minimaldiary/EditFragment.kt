@@ -41,7 +41,6 @@ class EditFragment : Fragment() {
         diaryContentEdit.setText(diaryDetail)
 
         imgBtnDateSelect.setOnClickListener {
-            // Todo カレンダー画像のクリック処理（MainActivityにコールバックしてDatePickerの呼び出し）
             listener?.onDateSelectBtnClicked()
         }
     }
