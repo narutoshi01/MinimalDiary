@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
         fab.setOnClickListener { view ->
             // EditFragmentにいく　新規作成　
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container_master, EditFragment.newInstance(getStringToday(), ""))
+                .replace(R.id.container_master, EditFragment.newInstance(getStringToday(), "", EditMode.NEW_ENTRY))
                 .commit()
         }
     }
