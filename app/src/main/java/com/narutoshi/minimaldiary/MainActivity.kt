@@ -15,14 +15,7 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        toolbar.apply {
-            setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
-            setNavigationOnClickListener {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.container_master, MainFragment.newInstance(1), FragmentTag.MAIN.toString())
-                    .commit()
-            }
-        }
+        removeToolBar(toolbar)
 
         supportFragmentManager.beginTransaction()
             .add(R.id.container_master, MainFragment.newInstance(1), FragmentTag.MAIN.toString())
@@ -33,6 +26,9 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container_master, EditFragment.newInstance(getStringToday(), "", EditMode.NEW_ENTRY), FragmentTag.EDIT.toString())
                 .commit()
+
+            hideFab(fab)
+            setToolBar(toolbar, supportFragmentManager, fab)
         }
     }
 
@@ -72,6 +68,8 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
         supportFragmentManager.beginTransaction()
             .replace(R.id.container_master, MainFragment.newInstance(1), FragmentTag.MAIN.toString())
             .commit()
+        showFab(fab)
+        removeToolBar(toolbar)
     }
 
     // DatePickerFragment.OnDateSetListener#onDateSelected
@@ -85,6 +83,9 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
         supportFragmentManager.beginTransaction()
             .replace(R.id.container_master, DetailFragment.newInstance(item.date, item.diaryDetail), FragmentTag.DETAIL.toString())
             .commit()
+
+        hideFab(fab)
+        setToolBar(toolbar, supportFragmentManager, fab)
     }
 
     // DetailFragment.OnFragmentInteractionListener#onDataDeleted

@@ -1,11 +1,12 @@
 package com.narutoshi.minimaldiary
 
+import android.app.AlertDialog
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import io.realm.Realm
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment() {
@@ -42,8 +43,11 @@ class DetailFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId) {
-            R.id.action_delete -> onDeleteBtnClicked(date, diaryDetail)
+        when (item?.itemId) {
+            R.id.action_delete -> {
+                onDeleteBtnClicked(date, diaryDetail)
+            }
+
             R.id.action_edit -> listener?.onEditBtnSelected(date!!, diaryDetail!!)
         }
 
@@ -71,6 +75,7 @@ class DetailFragment : Fragment() {
 
         dateDetail.text = date
         diaryContentDetail.text = diaryDetail
+
     }
 
 
