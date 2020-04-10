@@ -8,7 +8,7 @@ import com.google.android.material.textfield.TextInputEditText
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener, DatePickerFragment.OnDateSetListener, MainFragment.OnListFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener, DatePickerFragment.OnDateSetListener, MainFragment.OnListFragmentInteractionListener, DetailFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,10 +65,10 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
 
     // EditFragment.OnFragmentInteractionListener#onDataRecorded
     override fun onDataRecorded() {
-        upDateDiaryList()
+        updateDiaryList()
     }
 
-    private fun upDateDiaryList() {
+    private fun updateDiaryList() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container_master, MainFragment.newInstance(1), FragmentTag.MAIN.toString())
             .commit()
@@ -83,5 +83,18 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
     // MainFragment.OnListFragmentInteractionListener#onListItemClicked
     override fun onListItemClicked(item: DiaryModel) {
         //todo リスト内アイテムのクリック処理(DetailFragmentへ)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container_master, DetailFragment.newInstance(item.date, item.diaryDetail), FragmentTag.DETAIL.toString())
+            .commit()
+    }
+
+    // DetailFragment.OnFragmentInteractionListener#onDataDeleted
+    override fun onDataDeleted() {
+        updateDiaryList()
+    }
+
+    // DetailFragment.OnFragmentInteractionListener#onEditBtnSelected
+    override fun onEditBtnSelected(date: String, diaryDetail: String) {
+        // todo EditFragment 開く
     }
 }
