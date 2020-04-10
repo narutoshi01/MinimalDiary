@@ -8,7 +8,7 @@ import com.google.android.material.textfield.TextInputEditText
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener, DatePickerFragment.OnDateSetListener {
+class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener, DatePickerFragment.OnDateSetListener, MainFragment.OnListFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,5 +69,10 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
     override fun onDateSelected(stringDate: String) {
         val dateEdit = findViewById<TextInputEditText>(R.id.dateEdit)
         dateEdit.setText(stringDate)
+    }
+
+    // MainFragment.OnListFragmentInteractionListener#onListItemClicked
+    override fun onListItemClicked(item: DiaryModel) {
+        //todo リスト内アイテムのクリック処理(DetailFragmentへ)
     }
 }

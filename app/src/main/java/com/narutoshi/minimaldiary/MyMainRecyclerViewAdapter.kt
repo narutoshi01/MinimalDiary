@@ -5,20 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
-
 import com.narutoshi.minimaldiary.MainFragment.OnListFragmentInteractionListener
-import com.narutoshi.minimaldiary.dummy.DummyContent.DummyItem
-
 import kotlinx.android.synthetic.main.fragment_main.view.*
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 class MyMainRecyclerViewAdapter(
-    private val mValues: List<DummyItem>,
+    private val mValues: List<DiaryModel>,
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<MyMainRecyclerViewAdapter.ViewHolder>() {
 
@@ -26,10 +17,9 @@ class MyMainRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyItem
-            // Notify the active callbacks interface (the activity, if the fragment is attached to
-            // one) that an item has been selected.
-            mListener?.onListFragmentInteraction(item)
+            val item = v.tag as DiaryModel
+
+            mListener?.onListItemClicked(item)
         }
     }
 
@@ -40,9 +30,10 @@ class MyMainRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        // mValues : DiaryListのこと
+        // Listの１つ１つのカードに表示させるViewの中身の設定
         val item = mValues[position]
-        holder.mIdView.text = item.id
-        holder.mContentView.text = item.content
+        holder.cardTxtDate.text = item.date
 
         with(holder.mView) {
             tag = item
@@ -53,11 +44,9 @@ class MyMainRecyclerViewAdapter(
     override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView = mView.item_number
-        val mContentView: TextView = mView.content
+        // mView: CardViewのこと
+        // カードビュー内に表示させるアイテムに対するレファレンスを持つようなイメージかな？
 
-        override fun toString(): String {
-            return super.toString() + " '" + mContentView.text + "'"
-        }
+        val cardTxtDate: TextView = mView.cardTxtDate
     }
 }

@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import com.narutoshi.minimaldiary.dummy.DummyContent
-import com.narutoshi.minimaldiary.dummy.DummyContent.DummyItem
+import io.realm.Realm
 
 class MainFragment : Fragment() {
 
@@ -40,7 +38,12 @@ class MainFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyMainRecyclerViewAdapter(DummyContent.ITEMS, listener)
+
+                val realm = Realm.getDefaultInstance()
+                val results = realm.where(DiaryModel::class.java)
+                    .findAll().sort(DiaryModel::date.name)
+
+                adapter = MyMainRecyclerViewAdapter(results, listener)
             }
         }
         return view
@@ -61,7 +64,7 @@ class MainFragment : Fragment() {
     }
 
     interface OnListFragmentInteractionListener {
-        fun onListFragmentInteraction(item: DummyItem?)
+        fun onListItemClicked(item: DiaryModel)
     }
 
     companion object {
