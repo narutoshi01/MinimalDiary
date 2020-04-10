@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.realm.Realm
+import io.realm.Sort
 
 class MainFragment : Fragment() {
 
@@ -41,7 +42,7 @@ class MainFragment : Fragment() {
 
                 val realm = Realm.getDefaultInstance()
                 val results = realm.where(DiaryModel::class.java)
-                    .findAll().sort(DiaryModel::date.name)
+                    .findAll().sort(DiaryModel::date.name, Sort.DESCENDING)
 
                 adapter = MyMainRecyclerViewAdapter(results, listener)
             }
