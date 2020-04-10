@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
 
     // MainFragment.OnListFragmentInteractionListener#onListItemClicked
     override fun onListItemClicked(item: DiaryModel) {
-        //todo リスト内アイテムのクリック処理(DetailFragmentへ)
         supportFragmentManager.beginTransaction()
             .replace(R.id.container_master, DetailFragment.newInstance(item.date, item.diaryDetail), FragmentTag.DETAIL.toString())
             .commit()
@@ -95,6 +94,8 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
 
     // DetailFragment.OnFragmentInteractionListener#onEditBtnSelected
     override fun onEditBtnSelected(date: String, diaryDetail: String) {
-        // todo EditFragment 開く
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container_master, EditFragment.newInstance(date, diaryDetail, EditMode.EDIT), FragmentTag.EDIT.toString())
+            .commit()
     }
 }

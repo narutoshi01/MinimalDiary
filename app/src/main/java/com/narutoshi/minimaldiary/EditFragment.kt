@@ -1,7 +1,6 @@
 package com.narutoshi.minimaldiary
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -118,7 +117,19 @@ class EditFragment : Fragment() {
     }
 
     private fun updateExistingDiary() {
-        // todo RealmDBの更新処理
+        val realm = Realm.getDefaultInstance()
+        val selectedDiary = realm.where(DiaryModel::class.java)
+            .equalTo(DiaryModel::date.name, date)
+            .equalTo(DiaryModel::diaryDetail.name, diaryDetail)
+            .findFirst()
+
+        realm.beginTransaction()
+        selectedDiary!!.apply {
+            date = dateEdit.text.toString()
+            diaryDetail = diaryContentEdit.text.toString()
+        }
+        realm.commitTransaction()
+        realm.close()
     }
 
     override fun onAttach(context: Context) {
