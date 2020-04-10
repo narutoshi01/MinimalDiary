@@ -5,7 +5,7 @@ enum class IntentKey {
 }
 
 enum class FragmentTag {
-    DATE_PICKER
+    DATE_PICKER, MAIN, EDIT, DETAIL
 }
 
 enum class EditMode {

@@ -15,14 +15,23 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        toolbar.apply {
+            setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
+            setNavigationOnClickListener {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container_master, MainFragment.newInstance(1), FragmentTag.MAIN.toString())
+                    .commit()
+            }
+        }
+
         supportFragmentManager.beginTransaction()
-            .add(R.id.container_master, MainFragment.newInstance(1))
+            .add(R.id.container_master, MainFragment.newInstance(1), FragmentTag.MAIN.toString())
             .commit()
 
         fab.setOnClickListener { view ->
             // EditFragmentにいく　新規作成　
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container_master, EditFragment.newInstance(getStringToday(), "", EditMode.NEW_ENTRY))
+                .replace(R.id.container_master, EditFragment.newInstance(getStringToday(), "", EditMode.NEW_ENTRY), FragmentTag.EDIT.toString())
                 .commit()
         }
     }
@@ -61,7 +70,7 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
 
     private fun upDateDiaryList() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container_master, MainFragment.newInstance(1))
+            .replace(R.id.container_master, MainFragment.newInstance(1), FragmentTag.MAIN.toString())
             .commit()
     }
 
