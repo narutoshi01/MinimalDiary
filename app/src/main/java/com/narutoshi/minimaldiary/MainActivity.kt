@@ -7,7 +7,6 @@ import android.view.MenuItem
 import com.google.android.material.textfield.TextInputEditText
 
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener, DatePickerFragment.OnDateSetListener {
 
@@ -53,6 +52,17 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
     override fun onDateSelectBtnClicked() {
         // DatePicker開く
         DatePickerFragment().show(supportFragmentManager, FragmentTag.DATE_PICKER.toString())
+    }
+
+    // EditFragment.OnFragmentInteractionListener#onDataRecorded
+    override fun onDataRecorded() {
+        upDateDiaryList()
+    }
+
+    private fun upDateDiaryList() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container_master, MainFragment.newInstance(1))
+            .commit()
     }
 
     // DatePickerFragment.OnDateSetListener#onDateSelected

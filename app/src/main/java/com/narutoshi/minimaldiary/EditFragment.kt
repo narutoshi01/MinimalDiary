@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_edit.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -75,6 +76,9 @@ class EditFragment : Fragment() {
             EditMode.NEW_ENTRY -> addNewDiary()
             EditMode.EDIT -> updateExistingDiary()
         }
+
+        listener?.onDataRecorded()
+        fragmentManager!!.beginTransaction().remove(this).commit()
     }
 
     private fun isDateValid(): Boolean {
@@ -100,7 +104,17 @@ class EditFragment : Fragment() {
     }
 
     private fun addNewDiary() {
-        // todo RealmDBへの新規登録
+        val realm = Realm.getDefaultInstance()
+        realm.beginTransaction()
+
+        val newDiary = realm.createObject(DiaryModel::class.java)
+        newDiary.apply {
+            date = dateEdit.text.toString()
+            diaryDetail = diaryContentEdit.text.toString()
+        }
+
+        realm.commitTransaction()
+        realm.close()
     }
 
     private fun updateExistingDiary() {
@@ -123,6 +137,7 @@ class EditFragment : Fragment() {
 
     interface OnFragmentInteractionListener {
         fun onDateSelectBtnClicked()
+        fun onDataRecorded()
     }
 
     companion object {
